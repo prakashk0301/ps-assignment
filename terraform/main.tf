@@ -2,6 +2,19 @@ provider "aws" {
   region = var.aws_region
 }
 
+
+# Terraform Backend Configuration
+# This configuration uses S3 for storing the Terraform state file
+terraform {
+  backend "s3" {
+    bucket         = "prakash-ps-terraform-state-bucket"
+    key            = "statefile.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    use_lockfile   = true # This enables native locking
+  }
+}
+
 # VPC Configuration
 resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr
